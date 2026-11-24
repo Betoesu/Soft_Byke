@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftByke - Bicicletas, Peças e Oficina Especializada</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="pg-inicio" data-pagina="inicio">
+
+    <header class="cabecalho">
+        <a href="index.html" class="logo">Soft<span>Byke</span></a>
+        <nav class="menu-principal" id="menuPrincipal">
+            <ul>
+                <li><a href="index.html" class="ativo" data-pagina="inicio">Início</a></li>
+                <li><a href="empresa.html" data-pagina="empresa">Empresa</a></li>
+                <li><a href="galeria.html" data-pagina="galeria">Galeria</a></li>
+                <li><a href="tabela.html" data-pagina="tabela">Catálogo</a></li>
+                <li><a href="orcamento.html" data-pagina="orcamento">Orçamento (JS)</a></li>
+                <li><a href="sistema.php" data-pagina="sistema">Sistema (PHP)</a></li>
+                <li><a href="documentos.html" data-pagina="documentos">Documentos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="faixa-titulo">
+        <h1>Sua bicicleta, nosso ofício.</h1>
+        <p id="saudacao">Venda de bicicletas, peças, acessórios e oficina completa de reparo e revisão, há 5 anos com você.</p>
+        <div style="margin: 15px 0;">
+            <a href="orcamento.html" class="botao">Simular Orçamento (JavaScript)</a>
+            <a href="sistema.php" class="botao botao-secundario">Sistema Comercial &amp; Oficina (PHP/MySQL)</a>
+            <button type="button" class="botao botao-secundario" onclick="exibirSaudacao(true)">Alterar Visitante</button>
+        </div>
+        <blockquote align="center">
+            "Uma bicicleta bem cuidada dura décadas. O segredo está na manutenção simples e constante." - Equipe SoftByke
+        </blockquote>
+    </section>
+
+    <main>
+        <div class="faixa-automacao" id="faixaAutomacao">
+            <span class="tag-automacao">DESTAQUE AUTOMÁTICO</span>
+            <span id="textoAutomacao">Cupons ativos hoje: <b>SOFT10</b> (10% OFF), <b>BIKE15</b> (15% OFF) e <b>CEUB20</b> (20% OFF)!</span>
+        </div>
+
+        <h2><i>Soluções Completas para o Ciclista</i></h2>
+        <div class="cartoes">
+            <div class="cartao">
+                <h3><mark>Bicicletas</mark></h3>
+                <p>Modelos urbanos, speed e mountain bike das marcas SoftByke, Caloi e Oggi para todos os níveis de pedalada.</p>
+                <a href="galeria.html">Ver Galeria &rarr;</a>
+            </div>
+            <div class="cartao">
+                <h3><mark>Peças e Acessórios</mark></h3>
+                <p>Componentes Shimano, KMC, capacetes com LED, luzes e itens de manutenção com procedência garantida.</p>
+                <a href="tabela.html">Consultar Preços &rarr;</a>
+            </div>
+            <div class="cartao">
+                <h3><mark>Simulador &amp; Bike Fit</mark></h3>
+                <p>Calcule seu orçamento em tempo real com cupons, frete e parcelas ou descubra o quadro ideal para sua altura.</p>
+                <a href="orcamento.html">Simular Agora &rarr;</a>
+            </div>
+            <div class="cartao">
+                <h3><mark>Oficina &amp; Gestão (PHP)</mark></h3>
+                <p>Agendamento online de revisão, cadastro de clientes e controle de estoque integrados ao banco MySQL.</p>
+                <a href="sistema.php">Acessar Sistema &rarr;</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2><i>Receba novidades e promoções exclusivas</i></h2>
+        <form class="form-newsletter" onsubmit="return validarNewsletter()">
+            <label for="emailNewsletter"><strong>Cadastre seu e-mail:</strong></label>
+            <input type="email" id="emailNewsletter" name="emailNewsletter" placeholder="seuemail@exemplo.com" required>
+            <input type="submit" value="Quero receber" class="botao">
+        </form>
+    </main>
+
+    <section class="patrocinadores">
+        <h2>Nossos patrocinadores e parceiros</h2>
+        <div class="grade-patrocinadores">
+            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador_dcd.jpeg" alt="Logo do patrocinador 1">
+            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador_brawl.png" alt="Logo do patrocinador 2">
+            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador-clash.jpg" alt="Logo do patrocinador 3">
+            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador-paladins.jpg" alt="Logo do patrocinador 4">
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>SoftByke</strong> - Loja de bicicletas, peças e oficina especializada</p>
+        <p>Ciência da Computação - Disciplina: Desenvolvimento Web <sup>Turma: A</sup> - Prof. Valdemir S Silva</p>
+        <p>Davi de Sousa Costa &bull; Igor Christofidis de Lima &bull; Pedro Carolino Barreto Sarmento &bull; Vinícius Bernardes Carneiro</p>
+        <p>&copy; 2026 SoftByke <sub>Todos os direitos reservados</sub></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

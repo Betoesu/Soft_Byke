@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftByke - Simulador de Orçamento e Bike Fit (JavaScript)</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="pg-orcamento" data-pagina="orcamento">
+
+    <header class="cabecalho">
+        <a href="index.html" class="logo">Soft<span>Byke</span></a>
+        <nav class="menu-principal" id="menuPrincipal">
+            <ul>
+                <li><a href="index.html" data-pagina="inicio">Início</a></li>
+                <li><a href="empresa.html" data-pagina="empresa">Empresa</a></li>
+                <li><a href="galeria.html" data-pagina="galeria">Galeria</a></li>
+                <li><a href="tabela.html" data-pagina="tabela">Catálogo</a></li>
+                <li><a href="orcamento.html" class="ativo" data-pagina="orcamento">Orçamento (JS)</a></li>
+                <li><a href="sistema.php" data-pagina="sistema">Sistema (PHP)</a></li>
+                <li><a href="documentos.html" data-pagina="documentos">Documentos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="faixa-titulo">
+        <h1>Simulador de Orçamento &amp; Calculadora Bike Fit</h1>
+        <p>Monte seu pedido de bicicletas, peças e serviços de oficina com cálculo automático em JavaScript (descontos, frete, impostos e parcelamento).</p>
+    </section>
+
+    <main>
+        <!-- FAIXA DE AUTOMAÇÃO (ITEM 10.h - setInterval) -->
+        <div class="faixa-automacao" id="faixaAutomacao">
+            <span class="tag-automacao">OFERTA AUTOMÁTICA</span>
+            <span id="textoAutomacao">Cupons ativos hoje: <b>SOFT10</b> (10% OFF), <b>BIKE15</b> (15% OFF) e <b>CEUB20</b> (20% OFF)!</span>
+        </div>
+
+        <!-- =========================================================
+             PARTE 1: FORMULÁRIO DE ADIÇÃO DE ITENS E PARÂMETROS (JS)
+             ========================================================= -->
+        <div class="bloco-sistema">
+            <h2>1. Adicionar Bicicletas, Peças ou Serviços ao Orçamento</h2>
+            <p>Selecione a categoria e o item desejado. Os preços unitários e subtotais são calculados automaticamente via objetos e métodos em JavaScript.</p>
+
+            <form id="formAdicionarItem" class="form-grid" onsubmit="return adicionarItemAoOrcamento(event)">
+                <div class="campo-form">
+                    <label for="selCategoria">Categoria Comercial: *</label>
+                    <select id="selCategoria" onchange="atualizarSelectProdutos()" required>
+                        <option value="Bicicletas">Bicicletas</option>
+                        <option value="Peças">Peças e Componentes</option>
+                        <option value="Acessórios">Acessórios</option>
+                        <option value="Manutenção">Oficina / Manutenção</option>
+                    </select>
+                </div>
+
+                <div class="campo-form">
+                    <label for="selProduto">Produto ou Serviço: *</label>
+                    <select id="selProduto" onchange="atualizarPrecoUnitario()" required>
+                        <!-- Preenchido dinamicamente pelo JavaScript -->
+                    </select>
+                </div>
+
+                <div class="campo-form">
+                    <label for="numPrecoUnitario">Preço Unitário (R$):</label>
+                    <input type="text" id="numPrecoUnitario" readonly value="R$ 1.299,00" class="campo-leitura">
+                </div>
+
+                <div class="campo-form">
+                    <label for="numQuantidade">Quantidade: *</label>
+                    <input type="number" id="numQuantidade" min="1" max="50" value="1" oninput="atualizarPreviaItem()" required>
+                </div>
+
+                <div class="campo-form">
+                    <label for="selGarantia">Garantia / Prioridade na Oficina:</label>
+                    <select id="selGarantia" onchange="atualizarPreviaItem()">
+                        <option value="0">Padrão de Fábrica (Sem custo extra)</option>
+                        <option value="89.90">Garantia Estendida SoftByke +1 Ano (+ R$ 89,90/un.)</option>
+                        <option value="45.00">Prioridade Expressa 24h na Oficina (+ R$ 45,00/un.)</option>
+                    </select>
+                </div>
+
+                <div class="campo-form">
+                    <label for="txtPreviaSubtotal">Subtotal Previsto do Item:</label>
+                    <input type="text" id="txtPreviaSubtotal" readonly value="R$ 1.299,00" class="campo-leitura destaque-subtotal">
+                </div>
+
+                <div class="acoes-form">
+                    <button type="submit" class="botao">+ Adicionar Item na Tabela</button>
+                    <button type="button" class="botao botao-secundario" onclick="carregarKitExemplo()">Carregar Kit Exemplo</button>
+                    <button type="button" class="botao botao-perigo" onclick="limparOrcamentoCompleto()">Limpar Orçamento</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- =========================================================
+             PARTE 2: TABELA DINÂMICA DE ITENS DO ORÇAMENTO (ITEM 10.e)
+             ========================================================= -->
+        <div class="bloco-sistema">
+            <h2>2. Tabela de Itens do Orçamento (Manipulação Dinâmica via DOM)</h2>
+            <div class="tabela-responsiva">
+                <table class="tabela-catalogo" id="tabelaOrcamento">
+                    <thead>
+                        <tr>
+                            <th class="cor-cabecalho">#</th>
+                            <th class="cor-cabecalho">Categoria</th>
+                            <th class="cor-cabecalho">Produto / Serviço</th>
+                            <th class="cor-cabecalho">Unitário (R$)</th>
+                            <th class="cor-cabecalho">Adicional (R$)</th>
+                            <th class="cor-cabecalho">Qtd.</th>
+                            <th class="cor-cabecalho">Subtotal (R$)</th>
+                            <th class="cor-cabecalho">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaOrcamento">
+                        <!-- Preenchido dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- =========================================================
+             PARTE 3: CÁLCULO FINANCEIRO (DESCONTOS, FRETE E PARCELAS)
+             ========================================================= -->
+        <div class="grade-duas-colunas">
+            <div class="bloco-sistema">
+                <h2>3. Parâmetros de Pagamento, Cupom e Entrega</h2>
+                <form id="formParametrosCalculo" onsubmit="return false;">
+                    <div class="campo-form">
+                        <label for="nomeClienteOrcamento">Nome do Cliente:</label>
+                        <input type="text" id="nomeClienteOrcamento" placeholder="Digite seu nome para personalizar a proposta" oninput="recalcularOrcamentoGeral()">
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="selPerfilCliente">Perfil de Fidelidade (Regra de Negócio):</label>
+                        <select id="selPerfilCliente" onchange="recalcularOrcamentoGeral()">
+                            <option value="0">Cliente Novo (Sem desconto de fidelidade)</option>
+                            <option value="5">Cliente Cadastrado SoftByke (5% de desconto fidelidade)</option>
+                            <option value="8">Atleta / Equipe Parceira (8% de desconto fidelidade)</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="txtCupom">Cupom Promocional (Teste: <code>SOFT10</code>, <code>BIKE15</code> ou <code>CEUB20</code>):</label>
+                        <div class="grupo-input-botao">
+                            <input type="text" id="txtCupom" placeholder="Ex.: SOFT10" onkeyup="recalcularOrcamentoGeral()">
+                            <button type="button" class="botao" onclick="validarCupomManual()">Aplicar Cupom</button>
+                        </div>
+                        <small id="msgCupom" class="msg-apoio"></small>
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="selFrete">Modalidade de Entrega / Retirada:</label>
+                        <select id="selFrete" onchange="recalcularOrcamentoGeral()">
+                            <option value="retirada">Retirada na Loja (Matriz Asa Norte ou Filial Águas Claras) - Grátis</option>
+                            <option value="urbano">Entrega Urbana DF (R$ 35,00 — Grátis em compras acima de R$ 500,00)</option>
+                            <option value="expresso">Frete Expresso Entorno / Região (R$ 79,90 fixo)</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="selFormaPagamento">Forma de Pagamento:</label>
+                        <select id="selFormaPagamento" onchange="recalcularOrcamentoGeral()">
+                            <option value="pix">PIX Instantâneo (10% de desconto adicional sobre o líquido)</option>
+                            <option value="boleto">Boleto Bancário à Vista (5% de desconto adicional)</option>
+                            <option value="cartao_sem_juros">Cartão de Crédito em até 6x Sem Juros</option>
+                            <option value="cartao_com_juros">Cartão de Crédito de 7x a 12x (Juros de 1,99% a.m.)</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="selParcelas">Número de Parcelas Selecionado:</label>
+                        <select id="selParcelas" onchange="recalcularOrcamentoGeral()">
+                            <option value="1">1x (À vista)</option>
+                            <option value="2">2x</option>
+                            <option value="3">3x</option>
+                            <option value="4">4x</option>
+                            <option value="5">5x</option>
+                            <option value="6">6x</option>
+                            <option value="7">7x</option>
+                            <option value="8">8x</option>
+                            <option value="9">9x</option>
+                            <option value="10">10x</option>
+                            <option value="11">11x</option>
+                            <option value="12">12x</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bloco-sistema">
+                <h2>4. Demonstrativo Calculado em Tempo Real</h2>
+                <div class="painel-resumo-calculo" id="painelResumoCalculo">
+                    <div class="linha-resumo">
+                        <span>Quantidade Total de Itens:</span>
+                        <strong id="resQtdTotal">0 itens</strong>
+                    </div>
+                    <div class="linha-resumo">
+                        <span>Subtotal Bruto dos Itens:</span>
+                        <strong id="resSubtotalBruto">R$ 0,00</strong>
+                    </div>
+                    <div class="linha-resumo linha-desconto">
+                        <span>Desconto Fidelidade + Cupom:</span>
+                        <strong id="resDescontoCupom">- R$ 0,00</strong>
+                    </div>
+                    <div class="linha-resumo linha-desconto">
+                        <span>Desconto Forma de Pagamento (PIX/Boleto):</span>
+                        <strong id="resDescontoPagamento">- R$ 0,00</strong>
+                    </div>
+                    <div class="linha-resumo">
+                        <span>Custo de Frete / Entrega:</span>
+                        <strong id="resValorFrete">R$ 0,00</strong>
+                    </div>
+                    <div class="linha-resumo">
+                        <span>Juros de Parcelamento (7x a 12x):</span>
+                        <strong id="resValorJuros">R$ 0,00</strong>
+                    </div>
+                    <hr>
+                    <div class="linha-resumo linha-total-final">
+                        <span>VALOR TOTAL FINAL:</span>
+                        <strong id="resTotalFinal">R$ 0,00</strong>
+                    </div>
+                    <div class="linha-resumo">
+                        <span>Condição Selecionada:</span>
+                        <strong id="resDetalheParcela">1x de R$ 0,00</strong>
+                    </div>
+                </div>
+
+                <div class="acoes-form" style="margin-top: 15px;">
+                    <button type="button" class="botao" onclick="enviarOrcamentoParaPHP()">
+                        Agendar no Sistema PHP (CRUD) &rarr;
+                    </button>
+                    <button type="button" class="botao botao-secundario" onclick="window.print()">
+                        Imprimir / Salvar PDF
+                    </button>
+                </div>
+
+                <h3 style="margin-top: 22px;">Simulação de Parcelamento (Laço <code>for</code> em JS)</h3>
+                <div class="tabela-responsiva">
+                    <table class="tabela-catalogo tabela-compacta" id="tabelaParcelamento">
+                        <thead>
+                            <tr>
+                                <th class="cor-cabecalho">Parcelas</th>
+                                <th class="cor-cabecalho">Valor da Parcela</th>
+                                <th class="cor-cabecalho">Total a Pagar</th>
+                                <th class="cor-cabecalho">Condição</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaParcelamento">
+                            <!-- Gerado automaticamente pelo JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================
+             PARTE 4: CALCULADORA DE BIKE FIT & REVISÃO (FORMULÁRIO EXTRA JS)
+             ========================================================= -->
+        <div class="bloco-sistema">
+            <h2>5. Calculadora Técnica de Bike Fit &amp; Pressão de Pneus (JavaScript)</h2>
+            <p>Ferramenta interativa para descobrir o tamanho ideal do quadro, altura do selim e calibragem recomendada conforme seu biotipo.</p>
+
+            <form id="formBikeFit" class="form-grid" onsubmit="return calcularBikeFit(event)">
+                <div class="campo-form">
+                    <label for="fitAltura">Sua Estatura / Altura (cm): *</label>
+                    <input type="number" id="fitAltura" min="130" max="220" value="175" required oninput="calcularBikeFit(event)">
+                </div>
+
+                <div class="campo-form">
+                    <label for="fitCavalo">Medida do Cavalo / Entrepernas (cm): *</label>
+                    <input type="number" id="fitCavalo" min="55" max="105" value="81" required oninput="calcularBikeFit(event)">
+                </div>
+
+                <div class="campo-form">
+                    <label for="fitPeso">Peso do Ciclista (kg): *</label>
+                    <input type="number" id="fitPeso" min="35" max="160" value="75" required oninput="calcularBikeFit(event)">
+                </div>
+
+                <div class="campo-form">
+                    <label for="fitModalidade">Modalidade Pretendida: *</label>
+                    <select id="fitModalidade" onchange="calcularBikeFit(event)">
+                        <option value="mtb">Mountain Bike (Aro 29 - Trilhas e Terra)</option>
+                        <option value="speed">Speed / Road (Aro 700 - Estrada e Asfalto)</option>
+                        <option value="urbana">Urbana / Passeio (Deslocamento Diário)</option>
+                    </select>
+                </div>
+
+                <div class="acoes-form">
+                    <button type="submit" class="botao">Calcular Bike Fit Agora</button>
+                </div>
+            </form>
+
+            <div class="resultado-bikefit" id="resultadoBikeFit">
+                <!-- Preenchido automaticamente pelo JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>SoftByke</strong> - Loja de bicicletas, peças e oficina especializada</p>
+        <p>Ciência da Computação - Disciplina: Desenvolvimento Web <sup>Turma: A</sup> - Prof. Valdemir S Silva</p>
+        <p>Davi de Sousa Costa &bull; Igor Christofidis de Lima &bull; Pedro Carolino Barreto Sarmento &bull; Vinícius Bernardes Carneiro</p>
+        <p>&copy; 2026 SoftByke <sub>Todos os direitos reservados</sub></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

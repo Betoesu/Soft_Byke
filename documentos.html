@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftByke - Documentos, Diagramas e Wireframes</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="pg-documentos" data-pagina="documentos">
+
+    <header class="cabecalho">
+        <a href="index.html" class="logo">Soft<span>Byke</span></a>
+        <nav class="menu-principal" id="menuPrincipal">
+            <ul>
+                <li><a href="index.html" data-pagina="inicio">Início</a></li>
+                <li><a href="empresa.html" data-pagina="empresa">Empresa</a></li>
+                <li><a href="galeria.html" data-pagina="galeria">Galeria</a></li>
+                <li><a href="tabela.html" data-pagina="tabela">Catálogo</a></li>
+                <li><a href="orcamento.html" data-pagina="orcamento">Orçamento (JS)</a></li>
+                <li><a href="sistema.php" data-pagina="sistema">Sistema (PHP)</a></li>
+                <li><a href="documentos.html" class="ativo" data-pagina="documentos">Documentos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="faixa-titulo">
+        <h1>Documentação Técnica, Diagramas e Wireframes</h1>
+        <p>Artefatos de Engenharia de Software e Design de Interface do Projeto Final SoftByke (Caso de Uso, Fluxo do Sistema, Wireframes e Protótipo).</p>
+    </section>
+
+    <main>
+        <!-- DIAGRAMA DE CASO DE USO -->
+        <div class="bloco-diagrama">
+            <h2>1. Diagrama de Caso de Uso (UML)</h2>
+            <p>Representa as interações entre os atores (<strong>Cliente / Visitante</strong> e <strong>Atendente / Administrador SoftByke</strong>) e os casos de uso do sistema web.</p>
+            <img src="images/documentos/diagrama_caso_uso.png" alt="Diagrama de Caso de Uso do Sistema SoftByke">
+        </div>
+
+        <!-- DIAGRAMA DE FLUXO DO SISTEMA -->
+        <div class="bloco-diagrama">
+            <h2>2. Diagrama de Fluxo do Sistema</h2>
+            <p>Demonstra o fluxo operacional de navegação, simulação de orçamento em JavaScript e persistência CRUD em PHP e Banco de Dados MySQL.</p>
+            <img src="images/documentos/diagrama_fluxo.png" alt="Diagrama de Fluxo do Sistema SoftByke">
+        </div>
+
+        <!-- WIREFRAMES DE TODAS AS PÁGINAS COMERCIAIS -->
+        <h2>3. Wireframes das Páginas do Projeto</h2>
+        <p>Rascunhos estruturais padronizados de todas as telas implementadas no portal comercial SoftByke:</p>
+
+        <div class="grade-wireframes">
+            <div class="wireframe-item">
+                <img src="images/documentos/index.png" alt="Wireframe da Página Inicial">
+                <p>1. Página Inicial (Início)</p>
+            </div>
+            <div class="wireframe-item">
+                <img src="images/documentos/empresa.png" alt="Wireframe da Página Empresa">
+                <p>2. Empresa (Briefing)</p>
+            </div>
+            <div class="wireframe-item">
+                <img src="images/documentos/galeria.png" alt="Wireframe da Página Galeria">
+                <p>3. Galeria de Produtos</p>
+            </div>
+            <div class="wireframe-item">
+                <img src="images/documentos/tabela.png" alt="Wireframe da Página Catálogo">
+                <p>4. Catálogo &amp; Preços (Tabela)</p>
+            </div>
+            <div class="wireframe-item">
+                <img src="images/documentos/orcamento.png" alt="Wireframe da Página Simulador de Orçamento JS">
+                <p>5. Simulador de Orçamento (JS)</p>
+            </div>
+            <div class="wireframe-item">
+                <img src="images/documentos/sistema.png" alt="Wireframe da Página Sistema CRUD PHP">
+                <p>6. Sistema Comercial CRUD (PHP/MySQL)</p>
+            </div>
+            <div class="wireframe-item">
+                <img src="images/documentos/documentos.png" alt="Wireframe da Página Documentos">
+                <p>7. Documentos e Artefatos</p>
+            </div>
+        </div>
+
+        <!-- PROTÓTIPO -->
+        <div class="bloco-diagrama" style="margin-top: 25px;">
+            <h2>4. Protótipo de Alta Fidelidade</h2>
+            <p>Visualização final do projeto implementado em conformidade com o design planejado no Figma / protótipo visual.</p>
+            <img src="images/documentos/prototipo_telas.png" alt="Protótipo de Alta Fidelidade do Sistema SoftByke">
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>SoftByke</strong> - Loja de bicicletas, peças e oficina especializada</p>
+        <p>Ciência da Computação - Disciplina: Desenvolvimento Web <sup>Turma: A</sup> - Prof. Valdemir S Silva</p>
+        <p>Davi de Sousa Costa &bull; Igor Christofidis de Lima &bull; Pedro Carolino Barreto Sarmento &bull; Vinícius Bernardes Carneiro</p>
+        <p>&copy; 2026 SoftByke <sub>Todos os direitos reservados</sub></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

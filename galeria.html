@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftByke - Galeria de Produtos</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="pg-galeria" data-pagina="galeria">
+
+    <header class="cabecalho">
+        <a href="index.html" class="logo">Soft<span>Byke</span></a>
+        <nav class="menu-principal" id="menuPrincipal">
+            <ul>
+                <li><a href="index.html" data-pagina="inicio">Início</a></li>
+                <li><a href="empresa.html" data-pagina="empresa">Empresa</a></li>
+                <li><a href="galeria.html" class="ativo" data-pagina="galeria">Galeria</a></li>
+                <li><a href="tabela.html" data-pagina="tabela">Catálogo</a></li>
+                <li><a href="orcamento.html" data-pagina="orcamento">Orçamento (JS)</a></li>
+                <li><a href="sistema.php" data-pagina="sistema">Sistema (PHP)</a></li>
+                <li><a href="documentos.html" data-pagina="documentos">Documentos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="faixa-titulo">
+        <h1>Galeria de Bicicletas, Peças e Componentes</h1>
+        <p>Conheça os 25 modelos e componentes em destaque nas lojas SoftByke. Utilize os filtros interativos abaixo ou simule seu orçamento.</p>
+    </section>
+
+    <main>
+        <div class="barra-filtros-galeria">
+            <strong>Filtrar por linha (JavaScript): </strong>
+            <button type="button" class="filtro-galeria-btn ativo" onclick="filtrarGaleria('todos', this)">Todos (25)</button>
+            <button type="button" class="filtro-galeria-btn" onclick="filtrarGaleria('Caloi', this)">Linha Caloi</button>
+            <button type="button" class="filtro-galeria-btn" onclick="filtrarGaleria('Oggi', this)">Linha Oggi</button>
+            <button type="button" class="filtro-galeria-btn" onclick="filtrarGaleria('Shimano', this)">Componentes Shimano</button>
+            <button type="button" class="filtro-galeria-btn" onclick="filtrarGaleria('Câmbio', this)">Transmissão &amp; Câmbios</button>
+            <a href="orcamento.html" class="botao" style="margin-left: 10px;">Ir para o Simulador de Orçamento &rarr;</a>
+        </div>
+
+        <div class="grade-galeria">
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTWcg9DNyzpHkYmLqftaovB1_hMmia4C20TxLB8lszuHQUcTpZH30XAxw&s=10" alt="Caloi Velox">
+                <figcaption>Caloi Velox</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4Hu5rWlGRx-be-63B6GcHWBXe2qYCNFQpxya16MZzyA&s=10" alt="Caloi Elite Carbon">
+                <figcaption>Caloi Elite Carbon</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp-XMVZKNOJn8rVS0JFQwGpzgpscoaQWU0rRcoGQuR2w&s" alt="Caloi Elite Deore">
+                <figcaption>Caloi Elite Deore</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshhe9tp-QnddsrS_8o1QalAJerl2b6g6SY9A9rODngg&s=10" alt="Caloi Explorer">
+                <figcaption>Caloi Explorer</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRta1293YizAOayZHeKNs39KVpRwibfbBDLmGNBVCmY2Q&s=10" alt="Caloi Aluminum Pro">
+                <figcaption>Caloi Aluminum Pro</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMdEei1GfLC6wjOs5B2UE8TlTyPE5ZXGyq44qOtNKw8A&s=10" alt="Caloi Commander">
+                <figcaption>Caloi Commander</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsONYO5ZytYBjU7rgoZqX9OUwr4yPYwgZGmhWZphkbyA&s=10" alt="Caloi Montana">
+                <figcaption>Caloi Montana</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL_6Je6EVLNDAP435EBHbghXtuvejukoLYhB0qMI1WNw&s=10" alt="Caloi E-Vibe">
+                <figcaption>Caloi E-Vibe</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5L4Tv4AAGfU0s2eJHRGyitrK46nd2Q0F3DUaoAPaGLA&s=10" alt="Caloi 100 Comfort">
+                <figcaption>Caloi 100 Comfort</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-0ZJNamfhIWJWla_7OzReX7nO82emZm4LjrWmy72b2w&s=10" alt="Caloi Supra">
+                <figcaption>Caloi Supra</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo5wBTD_clJea0MVGONZddPXKJJvf7r5wYX4Z-4nPCKw&s=10" alt="Oggi Float 5.0">
+                <figcaption>Oggi Float 5.0</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRvp3NOi1EZ3BoD4rqQwr6pwFXQPp4pcwdRABN4Bib6Q&s=10" alt="Oggi Razzo T-130">
+                <figcaption>Oggi Razzo T-130</figcaption>
+            </figure>
+            <figure>
+                <img src="https://images.tcdn.com.br/img/img_prod/1087855/bicicleta_oggi_e_bike_potenza_sport_deore_2025_3595_1_9128ba9c9d964b48dd9999e11d0637da.jpg" alt="Oggi Potenza Sport">
+                <figcaption>Oggi Potenza Sport</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKKQzBWfDaDxSF8seCWZ-z8sq-hgua73hNoLznvcJRmg&s=10" alt="Oggi Big WHEEL 7.3">
+                <figcaption>Oggi Big WHEEL 7.3</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNU4gogF3sGfCaLFQur4pruPlp9Ut1FRlLNHc35b-JJQ&s=10" alt="Oggi Float Sport">
+                <figcaption>Oggi Float Sport</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlSWx9dv3ij8Bp6dEVi0jYH3X0oVWoklEWPP4Vab4DRQ&s=10" alt="Oggi Street Go">
+                <figcaption>Oggi Street Go</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS35ofbaSdW6f3ZoY4Suqkg_jbIdGFuFYjdK6qMV4Q97Q&s=10" alt="Oggi Agile Pro XT">
+                <figcaption>Oggi Agile Pro XT</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqnED8TQ6TrrPfu6Es5Xbhvo0F0vJp8mqoZS43o5sqfg&s=10" alt="Oggi Agile Sport">
+                <figcaption>Oggi Agile Sport</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVHFEsUN4DFpPfxKnxJY5f6Yqgs15UkUaLzid42WBlzg&s" alt="Oggi Agile Pro Sram S1000">
+                <figcaption>Oggi Agile Pro Sram S1000</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt9l1mBIRB_9QxtCXy18AXKND9d6Us1G9PAHmeOz-8Iw&s=10" alt="Oggi Hacker Sport">
+                <figcaption>Oggi Hacker Sport</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSQcwZ9hnMI6CaHOgQzIu19AZNrThn6wm0xT-AvOZsDFX9ZyQCFRk6ygNjxHroP38q0XrIXxgCGjOlghR_ZRbCqmXhWXqM8xm8f2-O9BnjiplgrY8aYqsgNcQ" alt="Pedivela Shimano Ty301">
+                <figcaption>Pedivela Shimano Ty301</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSzl5ehxidR-y7NM_UzT48M0Ukv53eRrNF07uT0KBMWCBaj0SlHIL1NSCuDiADSxuLw-880dIuR_XQZyoYeMAWh8j44EOa0" alt="Cassete Shimano Deore 12v CS-M6100">
+                <figcaption>Cassete Shimano Deore 12v CS-M6100</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTfwEueyy6-5jJB6yyoMNuCMjY2nmUT5bi5mygThWFNTNJgdgw-O7uAAtbvhffItlDkr7FnVRMN3FAQW2IFjrAHtz9D9z-FN6lF4eAfG1vTPmi5aAgm4RBU1Q" alt="Câmbio Traseiro High One 10v 11/42d Shimano Sram">
+                <figcaption>Câmbio Traseiro High One 10v 11/42d Shimano Sram</figcaption>
+            </figure>
+            <figure>
+                <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSWTZq7qlBZyqMR_2BLrrSPsn88dRPBtpipAjTyOL-HEJutfkc-0KjwzbEfDuBSoghbmKDfUiFj45tPjhkZixARqafKEdRjwI1PWUZ2LnrTpomaJTR3KEHdMA" alt="Câmbio Traseiro Caloi Para Bicicleta 21/24 Marchas">
+                <figcaption>Câmbio Traseiro Caloi Para Bicicleta 21/24 Marchas</figcaption>
+            </figure>
+            <figure>
+                <img src="https://http2.mlstatic.com/D_NQ_NP_919181-MLB49385060734_032022-O.webp" alt="Câmbio Dianteiro Yamada Q25">
+                <figcaption>Câmbio Dianteiro Yamada Q25</figcaption>
+            </figure>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>SoftByke</strong> - Loja de bicicletas, peças e oficina especializada</p>
+        <p>Ciência da Computação - Disciplina: Desenvolvimento Web <sup>Turma: A</sup> - Prof. Valdemir S Silva</p>
+        <p>Davi de Sousa Costa &bull; Igor Christofidis de Lima &bull; Pedro Carolino Barreto Sarmento &bull; Vinícius Bernardes Carneiro</p>
+        <p>&copy; 2026 SoftByke <sub>Todos os direitos reservados</sub></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
