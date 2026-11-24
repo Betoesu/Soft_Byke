@@ -319,9 +319,23 @@ function usuarioJaCadastrado() {
 
 function sincronizarEstadoCadastroUI() {
   var navItem = document.getElementById("itemNavCadastro");
+  var navSair = document.getElementById("itemNavSair");
+
+  // Cria dinamicamente o botão de Sair / Reiniciar Login na barra de navegação caso ainda não exista
+  if (!navSair && navItem && navItem.parentNode) {
+    navSair = document.createElement("li");
+    navSair.id = "itemNavSair";
+    navSair.style.display = "none";
+    navSair.innerHTML = '<a href="#" class="nav-botao-sair" onclick="reiniciarLoginUsuario(event)">Sair</a>';
+    navItem.parentNode.appendChild(navSair);
+  }
+
   if (usuarioJaCadastrado()) {
     if (navItem) {
       navItem.style.display = "none";
+    }
+    if (navSair) {
+      navSair.style.display = "inline-block";
     }
     var nomeCliente = localStorage.getItem("softbyke_nome_cliente") || "";
     var campoNomeOrc = document.getElementById("nomeClienteOrcamento");
@@ -332,7 +346,33 @@ function sincronizarEstadoCadastroUI() {
     if (navItem) {
       navItem.style.display = "inline-block";
     }
+    if (navSair) {
+      navSair.style.display = "none";
+    }
   }
+}
+
+function reiniciarLoginUsuario(event) {
+  if (event) {
+    event.preventDefault();
+  }
+  localStorage.removeItem("softbyke_usuario_cadastrado");
+  localStorage.removeItem("softbyke_nome_cliente");
+  sessionStorage.removeItem("softbyke_visitante");
+
+  var campoNomeOrc = document.getElementById("nomeClienteOrcamento");
+  if (campoNomeOrc) {
+    campoNomeOrc.value = "";
+  }
+  var selPerfil = document.getElementById("selPerfilCliente");
+  if (selPerfil) {
+    selPerfil.value = "0";
+    recalcularOrcamentoGeral();
+  }
+
+  sincronizarEstadoCadastroUI();
+  atualizarTextoSaudacao();
+  exibirModalAviso("Sessão Reiniciada", "Seu acesso foi reiniciado. O botão Cadastre-se já está visível novamente.");
 }
 
 function abrirModalCadastro(event) {
