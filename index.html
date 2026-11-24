@@ -13,12 +13,11 @@
         <nav class="menu-principal" id="menuPrincipal">
             <ul>
                 <li><a href="index.html" class="ativo" data-pagina="inicio">Início</a></li>
-                <li><a href="empresa.html" data-pagina="empresa">Empresa</a></li>
-                <li><a href="galeria.html" data-pagina="galeria">Galeria</a></li>
-                <li><a href="tabela.html" data-pagina="tabela">Catálogo</a></li>
-                <li><a href="orcamento.html" data-pagina="orcamento">Orçamento (JS)</a></li>
-                <li><a href="sistema.php" data-pagina="sistema">Sistema (PHP)</a></li>
-                <li><a href="documentos.html" data-pagina="documentos">Documentos</a></li>
+                <li><a href="galeria.html" data-pagina="galeria">Catálogo</a></li>
+                <li><a href="orcamento.html" data-pagina="orcamento">Orçamento</a></li>
+                <li><a href="sistema.php?aba=agendamentos" data-pagina="oficina">Oficina</a></li>
+                <li><a href="sistema.php?aba=produtos" data-pagina="estoque">Estoque</a></li>
+                <li id="itemNavCadastro"><a href="#" class="nav-destaque-cadastro" onclick="abrirModalCadastro(event)">Cadastre-se</a></li>
             </ul>
         </nav>
     </header>
@@ -26,71 +25,71 @@
     <section class="faixa-titulo">
         <h1>Sua bicicleta, nosso ofício.</h1>
         <p id="saudacao">Venda de bicicletas, peças, acessórios e oficina completa de reparo e revisão, há 5 anos com você.</p>
-        <div style="margin: 15px 0;">
-            <a href="orcamento.html" class="botao">Simular Orçamento (JavaScript)</a>
-            <a href="sistema.php" class="botao botao-secundario">Sistema Comercial &amp; Oficina (PHP/MySQL)</a>
-            <button type="button" class="botao botao-secundario" onclick="exibirSaudacao(true)">Alterar Visitante</button>
+        <div class="acoes-hero">
+            <a href="galeria.html" class="botao">Explorar Catálogo</a>
+            <a href="orcamento.html" class="botao botao-secundario">Simular Orçamento</a>
+            <button type="button" class="botao botao-contorno" onclick="abrirModalBoasVindas()">Personalizar Atendimento</button>
         </div>
-        <blockquote align="center">
-            "Uma bicicleta bem cuidada dura décadas. O segredo está na manutenção simples e constante." - Equipe SoftByke
+        <blockquote class="citacao-hero">
+            "Uma bicicleta bem cuidada dura décadas. O segredo está na manutenção simples e constante." — Equipe SoftByke
         </blockquote>
     </section>
 
     <main>
         <div class="faixa-automacao" id="faixaAutomacao">
-            <span class="tag-automacao">DESTAQUE AUTOMÁTICO</span>
-            <span id="textoAutomacao">Cupons ativos hoje: <b>SOFT10</b> (10% OFF), <b>BIKE15</b> (15% OFF) e <b>CEUB20</b> (20% OFF)!</span>
+            <span class="tag-automacao">DESTAQUE</span>
+            <span id="textoAutomacao">Cupons promocionais disponíveis hoje: <b>SOFT10</b> com 10% de desconto, <b>BIKE15</b> com 15% de desconto e <b>CEUB20</b> com 20% de desconto.</span>
         </div>
 
-        <h2><i>Soluções Completas para o Ciclista</i></h2>
-        <div class="cartoes">
-            <div class="cartao">
-                <h3><mark>Bicicletas</mark></h3>
-                <p>Modelos urbanos, speed e mountain bike das marcas SoftByke, Caloi e Oggi para todos os níveis de pedalada.</p>
-                <a href="galeria.html">Ver Galeria &rarr;</a>
+        <section class="secao-solucoes">
+            <div class="cabecalho-secao">
+                <h2>Soluções Completas para o Ciclista</h2>
+                <p>Equipamentos de alta performance e assistência técnica especializada nas unidades Asa Norte e Águas Claras.</p>
             </div>
-            <div class="cartao">
-                <h3><mark>Peças e Acessórios</mark></h3>
-                <p>Componentes Shimano, KMC, capacetes com LED, luzes e itens de manutenção com procedência garantida.</p>
-                <a href="tabela.html">Consultar Preços &rarr;</a>
-            </div>
-            <div class="cartao">
-                <h3><mark>Simulador &amp; Bike Fit</mark></h3>
-                <p>Calcule seu orçamento em tempo real com cupons, frete e parcelas ou descubra o quadro ideal para sua altura.</p>
-                <a href="orcamento.html">Simular Agora &rarr;</a>
-            </div>
-            <div class="cartao">
-                <h3><mark>Oficina &amp; Gestão (PHP)</mark></h3>
-                <p>Agendamento online de revisão, cadastro de clientes e controle de estoque integrados ao banco MySQL.</p>
-                <a href="sistema.php">Acessar Sistema &rarr;</a>
-            </div>
-        </div>
 
-        <hr>
+            <div class="cartoes">
+                <div class="cartao">
+                    <span class="categoria-cartao">BICICLETAS</span>
+                    <h3>Modelos Urbanos, Estrada e Trilha</h3>
+                    <p>Seleção completa das linhas Caloi e Oggi com geometria moderna para deslocamento urbano, lazer e competição.</p>
+                    <a href="galeria.html" class="link-cartao">Ver modelos no catálogo &rarr;</a>
+                </div>
+                <div class="cartao">
+                    <span class="categoria-cartao">COMPONENTES</span>
+                    <h3>Peças e Transmissão Original</h3>
+                    <p>Câmbios, cassetes e pedivelas Shimano, High One, Caloi e Yamada com garantia de procedência e durabilidade.</p>
+                    <a href="galeria.html" class="link-cartao">Consultar componentes &rarr;</a>
+                </div>
+                <div class="cartao">
+                    <span class="categoria-cartao">ORÇAMENTO ONLINE</span>
+                    <h3>Cotação Personalizada</h3>
+                    <p>Monte seu pedido com cálculo imediato de cupons promocionais, modalidades de entrega e opções de pagamento.</p>
+                    <a href="orcamento.html" class="link-cartao">Montar orçamento &rarr;</a>
+                </div>
+                <div class="cartao">
+                    <span class="categoria-cartao">ASSISTÊNCIA TÉCNICA</span>
+                    <h3>Oficina Especializada</h3>
+                    <p>Agende revisões completas, regulagem de câmbio e manutenção preventiva com mecânicos qualificados.</p>
+                    <a href="sistema.php?aba=agendamentos" class="link-cartao">Agendar serviço &rarr;</a>
+                </div>
+            </div>
+        </section>
 
-        <h2><i>Receba novidades e promoções exclusivas</i></h2>
-        <form class="form-newsletter" onsubmit="return validarNewsletter()">
-            <label for="emailNewsletter"><strong>Cadastre seu e-mail:</strong></label>
-            <input type="email" id="emailNewsletter" name="emailNewsletter" placeholder="seuemail@exemplo.com" required>
-            <input type="submit" value="Quero receber" class="botao">
-        </form>
+        <section class="secao-newsletter">
+            <h2>Receba Novidades e Ofertas Exclusivas</h2>
+            <p>Inscreva seu e-mail para acompanhar lançamentos de bicicletas, chegada de componentes e campanhas sazonais da oficina.</p>
+            <form class="form-newsletter" onsubmit="return validarNewsletter(event)">
+                <input type="email" id="emailNewsletter" name="emailNewsletter" placeholder="Digite seu melhor e-mail" required>
+                <button type="submit" class="botao">Inscrever-se</button>
+            </form>
+        </section>
     </main>
 
-    <section class="patrocinadores">
-        <h2>Nossos patrocinadores e parceiros</h2>
-        <div class="grade-patrocinadores">
-            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador_dcd.jpeg" alt="Logo do patrocinador 1">
-            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador_brawl.png" alt="Logo do patrocinador 2">
-            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador-clash.jpg" alt="Logo do patrocinador 3">
-            <img class="faixa-patrocinador" src="images/patrocinadores/patrocinador-paladins.jpg" alt="Logo do patrocinador 4">
-        </div>
-    </section>
-
     <footer>
-        <p><strong>SoftByke</strong> - Loja de bicicletas, peças e oficina especializada</p>
-        <p>Ciência da Computação - Disciplina: Desenvolvimento Web <sup>Turma: A</sup> - Prof. Valdemir S Silva</p>
+        <p><strong>SoftByke</strong> — Loja de Bicicletas, Peças e Oficina Especializada</p>
+        <p>Unidades Brasília: Matriz Asa Norte &bull; Filial Águas Claras</p>
         <p>Davi de Sousa Costa &bull; Igor Christofidis de Lima &bull; Pedro Carolino Barreto Sarmento &bull; Vinícius Bernardes Carneiro</p>
-        <p>&copy; 2026 SoftByke <sub>Todos os direitos reservados</sub></p>
+        <p>&copy; 2026 SoftByke — Todos os direitos reservados</p>
     </footer>
 
     <script src="js/script.js"></script>

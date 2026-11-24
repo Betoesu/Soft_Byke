@@ -1,19 +1,6 @@
 <?php
-/**
- * =====================================================================
- * SOFTBYKE - ARQUIVO DE CONEXÃO COM O BANCO DE DADOS MYSQL (PDO)
- * Disciplina: Desenvolvimento Web - Turma A - CEUB
- * Professor: Valdemir S Silva
- * =====================================================================
- * Configuração padrão para XAMPP / WAMP:
- *   Host: localhost (127.0.0.1)
- *   Porta: 3306
- *   Usuário: root
- *   Senha: "" (vazia por padrão no XAMPP)
- *   Banco: softbyke_db
- */
-
 $host    = '127.0.0.1';
+$portas  = ['3306', '3307'];
 $porta   = '3306';
 $usuario = 'root';
 $senha   = '';
@@ -23,20 +10,33 @@ $pdo = null;
 $erroConexao = null;
 
 try {
-    // 1. Conecta ao servidor MySQL e cria o banco automaticamente caso ainda não exista
-    $pdoInicial = new PDO(
-        "mysql:host={$host};port={$porta};charset=utf8mb4",
-        $usuario,
-        $senha,
-        [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]
-    );
+    $pdoInicial = null;
+    $ultimoErro = null;
+
+    foreach ($portas as $portaTeste) {
+        try {
+            $pdoInicial = new PDO(
+                "mysql:host={$host};port={$portaTeste};charset=utf8mb4",
+                $usuario,
+                $senha,
+                [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ]
+            );
+            $porta = $portaTeste;
+            break;
+        } catch (PDOException $eTeste) {
+            $ultimoErro = $eTeste;
+        }
+    }
+
+    if ($pdoInicial === null) {
+        throw $ultimoErro;
+    }
 
     $pdoInicial->exec("CREATE DATABASE IF NOT EXISTS `{$banco}` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
 
-    // 2. Conecta diretamente ao banco softbyke_db
     $pdo = new PDO(
         "mysql:host={$host};port={$porta};dbname={$banco};charset=utf8mb4",
         $usuario,
@@ -47,7 +47,6 @@ try {
         ]
     );
 
-    // 3. Garante que as 3 tabelas do sistema existam (auto-inicialização a partir do script SQL)
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS clientes (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -89,7 +88,6 @@ try {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 
-    // 4. Popula dados iniciais se o banco acabou de ser criado e estiver vazio
     $qtdClientes = (int) $pdo->query("SELECT COUNT(*) FROM clientes")->fetchColumn();
     if ($qtdClientes === 0) {
         $pdo->exec("
@@ -102,21 +100,36 @@ try {
     }
 
     $qtdProdutos = (int) $pdo->query("SELECT COUNT(*) FROM produtos")->fetchColumn();
-    if ($qtdProdutos === 0) {
+    if ($qtdProdutos < 25) {
         $pdo->exec("
             INSERT IGNORE INTO produtos (id, categoria, modelo, marca, preco, estoque, status, descricao) VALUES
-            (1, 'Bicicletas', 'SoftByke Urban 100', 'SoftByke', 1299.00, 8, 'Disponível', 'Bicicleta urbana aro 700, quadro em alumínio leve e 21 velocidades.'),
-            (2, 'Bicicletas', 'SoftByke Trail 200', 'SoftByke', 2199.00, 5, 'Disponível', 'Mountain Bike aro 29 com suspensão dianteira e freios a disco hidráulicos.'),
-            (3, 'Bicicletas', 'SoftByke Speed 300', 'SoftByke', 3499.00, 2, 'Sob encomenda', 'Bicicleta de estrada (Road/Speed) com grupo Shimano Claris 16v.'),
-            (4, 'Bicicletas', 'Caloi Explorer Comp', 'Caloi', 2890.00, 4, 'Disponível', 'MTB aro 29 ideal para trilhas moderadas e estradões de terra.'),
-            (5, 'Bicicletas', 'Oggi Big Wheel 7.3', 'Oggi', 5490.00, 3, 'Disponível', 'MTB performance equipada com transmissão Shimano Deore 12v.'),
-            (6, 'Peças', 'Corrente Indexada 8v/9v', 'KMC', 89.90, 25, 'Disponível', 'Corrente de alta durabilidade com powerlink incluso.'),
-            (7, 'Peças', 'Pneu MTB Aro 29 Kevlar', 'Pirelli', 149.90, 18, 'Disponível', 'Pneu de baixa resistência ao rolamento para asfalto e terra.'),
-            (8, 'Peças', 'Câmbio Traseiro Deore 12v', 'Shimano', 229.90, 6, 'Sob encomenda', 'Câmbio traseiro de precisão para cassetes de até 51 dentes.'),
-            (9, 'Peças', 'Pedivela Triplo Ty301', 'Shimano', 139.90, 12, 'Disponível', 'Pedivela em alumínio para relações de 21 e 24 marchas.'),
-            (10, 'Acessórios', 'Capacete Ciclismo Pro LED', 'Giro', 179.90, 15, 'Disponível', 'Capacete ventilado com ajuste traseiro e sinalizador LED.'),
-            (11, 'Acessórios', 'Farol Dianteiro Recarregável USB', 'Absolute', 59.90, 30, 'Disponível', 'Iluminação frontal de 800 lumens resistente à água.'),
-            (12, 'Manutenção', 'Revisão Completa Premium', 'Oficina SoftByke', 149.90, 99, 'Disponível', 'Desmontagem, limpeza química, lubrificação, alinhamento de rodas e regulagem.');
+            (1, 'Bicicletas', 'Caloi Velox', 'Caloi', 1199.00, 10, 'Disponível', 'Bicicleta aro 29 ideal para passeios e lazer urbano.'),
+            (2, 'Bicicletas', 'Caloi Elite Carbon', 'Caloi', 12990.00, 2, 'Disponível', 'Mountain Bike quadro em carbono para alta performance.'),
+            (3, 'Bicicletas', 'Caloi Elite Deore', 'Caloi', 6490.00, 4, 'Disponível', 'MTB aro 29 equipada com transmissão Shimano Deore.'),
+            (4, 'Bicicletas', 'Caloi Explorer', 'Caloi', 2890.00, 6, 'Disponível', 'MTB aro 29 versátil para trilhas e estradões.'),
+            (5, 'Bicicletas', 'Caloi Aluminum Pro', 'Caloi', 1890.00, 8, 'Disponível', 'Quadro em alumínio leve com 21 velocidades.'),
+            (6, 'Bicicletas', 'Caloi Commander', 'Caloi', 2490.00, 5, 'Disponível', 'Bicicleta urbana e trilha leve com freios a disco.'),
+            (7, 'Bicicletas', 'Caloi Montana', 'Caloi', 1390.00, 9, 'Disponível', 'Modelo resistente para deslocamento diário e lazer.'),
+            (8, 'Bicicletas', 'Caloi E-Vibe', 'Caloi', 7990.00, 3, 'Disponível', 'Bicicleta elétrica urbana com pedal assistido.'),
+            (9, 'Bicicletas', 'Caloi 100 Comfort', 'Caloi', 1590.00, 7, 'Disponível', 'Geometria ergonômica focada no conforto urbano.'),
+            (10, 'Bicicletas', 'Caloi Supra', 'Caloi', 2190.00, 6, 'Disponível', 'MTB aro 29 com suspensão dianteira e freio a disco.'),
+            (11, 'Bicicletas', 'Oggi Float 5.0', 'Oggi', 2690.00, 5, 'Disponível', 'Geometria feminina ergonômica aro 29 com 24 marchas.'),
+            (12, 'Bicicletas', 'Oggi Razzo T-130', 'Oggi', 9490.00, 2, 'Sob encomenda', 'Full suspension para trilhas técnicas e all-mountain.'),
+            (13, 'Bicicletas', 'Oggi Potenza Sport', 'Oggi', 14990.00, 2, 'Sob encomenda', 'E-MTB equipada com motor central e grupo Shimano Deore.'),
+            (14, 'Bicicletas', 'Oggi Big WHEEL 7.3', 'Oggi', 5490.00, 4, 'Disponível', 'Consagrada MTB performance com Shimano Deore 12v.'),
+            (15, 'Bicicletas', 'Oggi Float Sport', 'Oggi', 2290.00, 7, 'Disponível', 'Quadros com tubos hidroformados e ótimo custo-benefício.'),
+            (16, 'Bicicletas', 'Oggi Street Go', 'Oggi', 1990.00, 8, 'Disponível', 'Agilidade e leveza para mobilidade urbana diária.'),
+            (17, 'Bicicletas', 'Oggi Agile Pro XT', 'Oggi', 13590.00, 2, 'Sob encomenda', 'Quadro superleve em fibra de carbono com grupo Shimano XT.'),
+            (18, 'Bicicletas', 'Oggi Agile Sport', 'Oggi', 8990.00, 3, 'Disponível', 'MTB em carbono para competições de Cross-Country.'),
+            (19, 'Bicicletas', 'Oggi Agile Pro Sram S1000', 'Oggi', 15490.00, 1, 'Sob encomenda', 'MTB carbono de elite com transmissão eletrônica Sram.'),
+            (20, 'Bicicletas', 'Oggi Hacker Sport', 'Oggi', 2090.00, 11, 'Disponível', 'Porta de entrada para o MTB aro 29 com componentes Shimano.'),
+            (21, 'Peças', 'Pedivela Shimano Ty301', 'Shimano', 139.90, 15, 'Disponível', 'Pedivela triplo em alumínio para 21 e 24 velocidades.'),
+            (22, 'Peças', 'Cassete Shimano Deore 12v CS-M6100', 'Shimano', 459.90, 8, 'Disponível', 'Cassete 10-51 dentes com tecnologia Hyperglide+.'),
+            (23, 'Peças', 'Cambio Traseiro High One 10v 11/42d Shimano Sram', 'High One', 189.90, 12, 'Disponível', 'Câmbio traseiro de alta precisão compatível com 10v.'),
+            (24, 'Peças', 'Câmbio Traseiro Caloi Para Bicicleta 21/24 Marchas', 'Caloi', 79.90, 20, 'Disponível', 'Câmbio indexado para reposição em bicicletas de 7v e 8v.'),
+            (25, 'Peças', 'Câmbio Dianteiro Yamada Q25', 'Yamada', 49.90, 25, 'Disponível', 'Câmbio dianteiro puxada dupla para quadros MTB.'),
+            (26, 'Manutenção', 'Revisão Completa Premium', 'SoftByke', 149.90, 99, 'Disponível', 'Desmontagem completa, limpeza química, lubrificação e alinhamento.'),
+            (27, 'Manutenção', 'Regulagem de Câmbio e Freios', 'SoftByke', 69.90, 99, 'Disponível', 'Ajuste fino de precisão para marchas e sistema de frenagem.');
         ");
     }
 
@@ -125,12 +138,12 @@ try {
         $pdo->exec("
             INSERT IGNORE INTO agendamentos (id, cliente_id, bicicleta_modelo, servico, unidade, data_agendamento, valor, status, observacoes) VALUES
             (1, 1, 'Caloi Elite Carbon', 'Revisão Completa Premium', 'Matriz - Asa Norte', '2026-11-25', 149.90, 'Agendado', 'Verificar ruído no movimento central e sangria do freio traseiro.'),
-            (2, 2, 'Oggi Float 5.0', 'Regulagem de Câmbio e Freios', 'Filial - Águas Claras', '2026-11-26', 79.90, 'Em Manutenção', 'Troca de cabos e conduítes inclusa.'),
-            (3, 3, 'SoftByke Trail 200', 'Instalação de Cassete e Corrente', 'Matriz - Asa Norte', '2026-11-20', 110.00, 'Concluído', 'Peças adquiridas na própria loja com desconto de cliente cadastrado.');
+            (2, 2, 'Oggi Float 5.0', 'Regulagem de Câmbio e Freios', 'Filial - Águas Claras', '2026-11-26', 69.90, 'Em Manutenção', 'Troca de cabos e conduítes inclusa.'),
+            (3, 3, 'Oggi Big WHEEL 7.3', 'Instalação de Cassete e Corrente', 'Matriz - Asa Norte', '2026-11-20', 110.00, 'Concluído', 'Componentes adquiridos na própria loja.');
         ");
     }
 
 } catch (PDOException $e) {
-    $erroConexao = "Não foi possível conectar ao MySQL ({$host}:{$porta}). Verifique se o serviço MySQL está iniciado no painel do XAMPP. Detalhe técnico: " . $e->getMessage();
+    $erroConexao = "Serviço de banco de dados indisponível no momento. Verifique se o MySQL está ativo no painel de controle.";
 }
 ?>
